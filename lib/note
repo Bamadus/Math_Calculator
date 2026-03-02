@@ -1,0 +1,804 @@
+// import 'package:flutter/material.dart';
+// import 'package:softmobile/homepage.dart';
+// import 'package:google_fonts/google_fonts.dart';
+
+
+// class Numpad extends StatefulWidget{
+//   const Numpad({super.key});
+
+//   @override
+//   State<Numpad> createState() => _NumpadState();
+// }
+
+// class _NumpadState extends State<Numpad> {
+
+//   final _otp = TextEditingController();
+
+//   Widget textfield(){
+//     return Container(
+//       margin:const EdgeInsets.only(left: 35,right: 35,),
+//       child: Center(
+//         child: TextField(
+//           readOnly: true,
+//           decoration: const InputDecoration(),
+//           controller: _otp,
+//         ),
+//       ),
+//     );
+//   }
+
+//   Widget keyPad(){
+//     return Container(
+//       //color: Colors.red,
+//       margin: const EdgeInsets.only(left: 15,right: 15, top: 35),
+//       child:Center(
+//         child: GridView.count(
+//             crossAxisCount: 3,
+//           shrinkWrap: true,
+//           children: [
+//             Num("1"),
+//             Num('2'),
+//             Num('3'),
+//             Num('4'),
+//             Num('5'),
+//             Num('6'),
+//             Num('7'),
+//             Num('8'),
+//             Num('9'),
+
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+
+//   Widget keys(){
+//     return Container(
+//       //color: Colors.blue,
+//       margin: const EdgeInsets.only(left: 5,right: 5),
+//       child:Container(
+//         // margin:EdgeInsets.only(),
+//         padding: const EdgeInsets.only(left: 152),
+//         child: Row(
+//           children: [
+//             Container(
+//                 alignment: Alignment.center,
+//                 decoration: ShapeDecoration(
+//                     //color: Colors.white,
+//                     shape:RoundedRectangleBorder(
+//                         borderRadius: BorderRadius.circular(49)
+//                     )),
+//                // margin: EdgeInsets.all(15),
+//                 child: Num('0')),
+//             const SizedBox(width: 54,),
+//             Container(
+//               padding: const EdgeInsets.all(2),
+//               decoration: ShapeDecoration(
+//                   color: const Color(0xffF0F0F0),
+//                   shape: RoundedRectangleBorder(
+//                       borderRadius: BorderRadius.circular(61)
+//                   )),
+//               child: InkWell(
+//                 onLongPress: ()=>delete(),
+//                 child: IconButton(onPressed:(){
+//                   var val = _otp.text.substring(0, _otp.text.length -1);
+//                   _otp.text= val;
+//                 }, icon: const Icon(Icons.keyboard_arrow_left,size: 35,),),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+//   void delete(){
+//     var val = _otp.clear();
+//     return val;
+//   }
+
+//   Widget Num(num){
+//     return InkWell(
+//       onTap: ()=> _otp.text += num,
+//       child: Container(
+//         padding: const EdgeInsets.all(1),
+//         alignment: Alignment.center,
+//         decoration: ShapeDecoration(
+//             shape:RoundedRectangleBorder(
+//                 borderRadius: BorderRadius.circular(39)
+//             )),
+//         margin: const EdgeInsets.all(15),
+//         child: Text(num,
+//           style:const  TextStyle(
+//             fontSize: 32,
+//             fontWeight: FontWeight.w600
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//    return Scaffold(
+//    body:  Container(
+//      child: ListView(
+//          children: [
+//          Column(
+//          crossAxisAlignment: CrossAxisAlignment.start,
+//          mainAxisAlignment: MainAxisAlignment.start,
+//          children: [
+//      Container(
+//          padding: const EdgeInsets.only(left: 5,top: 29),
+//          alignment: Alignment.topLeft,
+//        child: Row(
+//          children: [
+//            Container(
+//              padding: const EdgeInsets.all(2),
+//              decoration: ShapeDecoration(
+//                  color:const Color(0xffF0F0F0),
+//                  shape: RoundedRectangleBorder(
+//                      borderRadius: BorderRadius.circular(61)
+//                  )),
+//              child: IconButton(onPressed:(){
+//                Navigator.push(context, MaterialPageRoute(builder: (context)=> const Home()));
+//              },
+//                icon: const Icon(Icons.keyboard_arrow_left,size: 32,),),
+//            ),
+//            const SizedBox(width: 83,),
+//            Text("Enter OTP",
+//              style: GoogleFonts.lato(
+//                  fontSize:18,
+//                  color: Colors.black,
+//                  fontWeight: FontWeight.w600,
+//              ),
+//            )
+//          ],
+//        ),
+//      ),
+//            const SizedBox(height: 69,),
+//            Center(
+//              child: Text("Enter OTP Code",
+//                style: GoogleFonts.lato(
+//                  fontSize:18,
+//                  color: Colors.grey,
+//                  fontWeight: FontWeight.w600,
+//                ),
+//              ),
+//            ),
+//            const SizedBox(height: 85,),
+//            Container(
+//              child:Center(
+//                child: Column(
+//                  children: [
+//                    textfield(),
+//                    keyPad(),
+//                    keys()
+//                  ],
+//                ),
+//              ),
+//            )
+//          ])
+//     ])
+//    )
+//     );
+//   }
+// }
+
+// // Center(
+// //   child: Container(
+// //     child: TextField(
+// //       obscureText: true,
+// //       keyboardType: TextInputType.number,
+// //       inputFormatters: <TextInputFormatter>[
+// //         FilteringTextInputFormatter.singleLineFormatter,
+// //         FilteringTextInputFormatter.digitsOnly
+// //         //FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))
+// //       ],
+// //     ),
+// //   ),
+// // ),
+
+// import 'package:flutter/material.dart';
+
+// class AppTextField extends StatelessWidget {
+//   final ValueChanged? onChanged;
+//   final TextEditingController? controller;
+//   final String? hintText;
+//   final TextInputType textInputType;
+//   final FormFieldValidator<String>? validator;
+
+
+
+//   AppTextField(
+//       {Key? key,
+//         required this.controller,
+//         required this.hintText,
+//         this.textInputType = TextInputType.text,
+//         this.validator,
+//         this.onChanged,
+//       })
+//       : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return TextFormField(
+//       controller: controller,
+//       onChanged: onChanged,
+//       keyboardType: textInputType,
+
+//       decoration: InputDecoration(
+//         isDense: true,
+//         hintText: hintText,
+
+//         hintStyle: const TextStyle(
+//             fontSize: 14, fontWeight: FontWeight.w400, color: Colors.grey),
+//         focusedBorder: OutlineInputBorder(
+//             borderRadius: BorderRadius.circular(5),
+//             borderSide: const BorderSide(
+//                 style: BorderStyle.solid, width: 1, color: Colors.grey)),
+//         errorBorder: const OutlineInputBorder(
+//             borderSide: BorderSide(width: 1, color: Colors.red)),
+//         border:const  OutlineInputBorder(
+//             borderSide: BorderSide(
+//               width: 1,
+//               color:Color(0xff092C4C),
+//             ),
+//             borderRadius:  BorderRadius.all(
+//               Radius.circular(5.0),
+//             )),
+//         contentPadding:
+//         const EdgeInsets.symmetric(vertical: 18, horizontal: 15),
+//       ),
+//       style: TextStyle(color: Colors.black),
+//       validator: validator,
+//     );
+//   }
+// }
+
+// class AppPassword extends StatefulWidget {
+//   final ValueChanged? onChanged;
+//   final TextEditingController? controller;
+//   final String? hintText;
+//   bool obscureText;
+//   bool isPasswordobscure;
+//   final TextInputType textInputType;
+//   final FormFieldValidator<String>? validator;
+//   final Function? onTap;
+
+//   AppPassword(
+//       {Key? key,
+//         required this.controller,
+//         required this.hintText,
+//         this.textInputType = TextInputType.text,
+//         this.validator,
+//         this.onChanged,
+//         this.obscureText = true,
+//         this.isPasswordobscure = false,
+
+//         this.onTap})
+//       : super(key: key);
+
+//   @override
+//   State<AppPassword> createState() => _AppPasswordState();
+// }
+
+// class _AppPasswordState extends State<AppPassword> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return TextFormField(
+//       controller: widget.controller,
+//       decoration: InputDecoration(
+//         isDense: true,
+//         hintText: widget.hintText,
+//         hintStyle: const TextStyle(
+//             fontSize: 14, fontWeight: FontWeight.w400, color: Colors.grey),
+//         focusedBorder: OutlineInputBorder(
+//             borderRadius: BorderRadius.circular(5),
+//             borderSide: const BorderSide(
+//                 style: BorderStyle.solid, width: 1.0, color: Colors.grey)),
+//         errorBorder: const OutlineInputBorder(
+//           borderSide: BorderSide(width: 1.0, color: Colors.red),
+//         ),
+//         border: OutlineInputBorder(
+//             borderSide: BorderSide(
+//               width: 1,
+//               color: Theme.of(context).dividerColor,
+//             ),
+//             borderRadius: const BorderRadius.all(
+//               Radius.circular(5.0),
+//             )),
+//         contentPadding:
+//         const EdgeInsets.symmetric(vertical: 18, horizontal: 15),
+//         suffixIcon: IconButton(
+//             onPressed: () {
+//               setState(() {
+//                 !widget.obscureText
+//                     ? widget.obscureText = true
+//                     : widget.obscureText = false;
+//               });
+//             },
+//             icon: widget.isPasswordobscure
+//                 ? Container(
+//               width: 2,
+//             )
+//                 : widget.obscureText
+//                 ? const Icon(Icons.visibility_off_outlined)
+//                 : const Icon(Icons.visibility)),
+//       ),
+//       onChanged: widget.onChanged,
+//       obscureText: widget.obscureText,
+//       validator: widget.validator,
+//     );
+//   }
+// }
+
+
+// MAIN DART FILE
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'calculator_controller.dart';
+import 'calculator_screen.dart';
+import 'calculator_keypad.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      title: 'Calculator',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark(),
+      home: const CalculatorPage(),
+    );
+  }
+}
+
+class CalculatorPage extends StatelessWidget {
+  const CalculatorPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Initialize the controller
+    Get.put(CalculatorController());
+
+    return Scaffold(
+      backgroundColor: const Color(0xFF1C1C1E),
+      body: SafeArea(
+        child: Column(
+          children: const [
+            Expanded(
+              flex: 2,
+              child: CalculatorScreen(),
+            ),
+            Expanded(
+              flex: 3,
+              child: CalculatorKeypad(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+// Calculator Controller
+
+import 'package:get/get.dart';
+
+class CalculatorController extends GetxController {
+  // Observable state
+  RxString displayValue = '0'.obs;
+  RxString expression = ''.obs;
+  RxBool hasResult = false.obs;
+
+  // Internal state
+  String _currentInput = '0';
+  String _operator = '';
+  double _firstOperand = 0;
+  bool _waitingForSecondOperand = false;
+
+  /// Called when a number button is pressed
+  void onNumberPressed(String number) {
+    if (hasResult.value) {
+      // Start fresh after a result, unless continuing with operator
+      _currentInput = number;
+      expression.value = '';
+      hasResult.value = false;
+    } else if (_waitingForSecondOperand) {
+      _currentInput = number;
+      _waitingForSecondOperand = false;
+    } else {
+      if (_currentInput == '0') {
+        _currentInput = number;
+      } else {
+        _currentInput += number;
+      }
+    }
+    displayValue.value = _currentInput;
+  }
+
+  /// Called when a decimal point is pressed
+  void onDecimalPressed() {
+    if (hasResult.value) {
+      _currentInput = '0.';
+      expression.value = '';
+      hasResult.value = false;
+    } else if (_waitingForSecondOperand) {
+      _currentInput = '0.';
+      _waitingForSecondOperand = false;
+    } else if (!_currentInput.contains('.')) {
+      _currentInput += '.';
+    }
+    displayValue.value = _currentInput;
+  }
+
+  /// Called when an operator (+, -, *, /) is pressed
+  void onOperatorPressed(String operator) {
+    final double? inputValue = double.tryParse(_currentInput);
+    if (inputValue == null) return;
+
+    if (_operator.isNotEmpty && !_waitingForSecondOperand) {
+      // Chain operations: calculate previous first
+      double result = _calculate(_firstOperand, inputValue, _operator);
+      _firstOperand = result;
+      displayValue.value = _formatResult(result);
+      _currentInput = _formatResult(result);
+    } else {
+      _firstOperand = inputValue;
+    }
+
+    _operator = operator;
+    _waitingForSecondOperand = true;
+    hasResult.value = false;
+    expression.value = '${_formatResult(_firstOperand)} $operator';
+  }
+
+  /// Called when the equals button is pressed
+  void onEqualsPressed() {
+    if (_operator.isEmpty) return;
+
+    final double? secondOperand = double.tryParse(_currentInput);
+    if (secondOperand == null) return;
+
+    double result = _calculate(_firstOperand, secondOperand, _operator);
+    expression.value =
+        '${_formatResult(_firstOperand)} $_operator ${_formatResult(secondOperand)} =';
+    displayValue.value = _formatResult(result);
+    _currentInput = _formatResult(result);
+    _operator = '';
+    _waitingForSecondOperand = false;
+    hasResult.value = true;
+  }
+
+  /// Toggles the sign of the current value
+  void onToggleSign() {
+    if (_currentInput.startsWith('-')) {
+      _currentInput = _currentInput.substring(1);
+    } else if (_currentInput != '0') {
+      _currentInput = '-$_currentInput';
+    }
+    displayValue.value = _currentInput;
+  }
+
+  /// Converts the current value to a percentage
+  void onPercentPressed() {
+    final double? value = double.tryParse(_currentInput);
+    if (value == null) return;
+    final double result = value / 100;
+    _currentInput = _formatResult(result);
+    displayValue.value = _currentInput;
+  }
+
+  /// Clears all state (AC)
+  void onClear() {
+    _currentInput = '0';
+    _operator = '';
+    _firstOperand = 0;
+    _waitingForSecondOperand = false;
+    displayValue.value = '0';
+    expression.value = '';
+    hasResult.value = false;
+  }
+
+  /// Deletes the last character
+  void onDelete() {
+    if (hasResult.value) {
+      onClear();
+      return;
+    }
+    if (_currentInput.length > 1) {
+      _currentInput = _currentInput.substring(0, _currentInput.length - 1);
+    } else {
+      _currentInput = '0';
+    }
+    displayValue.value = _currentInput;
+  }
+
+  // Private helper: perform arithmetic
+  double _calculate(double a, double b, String op) {
+    switch (op) {
+      case '+':
+        return a + b;
+      case '-':
+        return a - b;
+      case '×':
+        return a * b;
+      case '÷':
+        return b != 0 ? a / b : double.nan;
+      default:
+        return b;
+    }
+  }
+
+  // Private helper: format result (remove trailing .0)
+  String _formatResult(double value) {
+    if (value.isNaN) return 'Error';
+    if (value.isInfinite) return 'Error';
+    if (value == value.toInt()) {
+      return value.toInt().toString();
+    }
+    // Limit decimal places
+    String str = value.toStringAsFixed(10);
+    str = str.replaceAll(RegExp(r'0+$'), '');
+    str = str.replaceAll(RegExp(r'\.$'), '');
+    return str;
+  }
+}
+
+// import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'calculator_controller.dart';
+
+class CalculatorScreen extends StatelessWidget {
+  const CalculatorScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final CalculatorController controller = Get.find<CalculatorController>();
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      decoration: const BoxDecoration(
+        color: Color(0xFF1C1C1E),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          // Expression / history row
+          Obx(
+            () => AnimatedSwitcher(
+              duration: const Duration(milliseconds: 200),
+              child: Text(
+                controller.expression.value,
+                key: ValueKey(controller.expression.value),
+                style: const TextStyle(
+                  color: Color(0xFF8E8E93),
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                ),
+                textAlign: TextAlign.right,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+          // Main display value
+          Obx(
+            () => FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerRight,
+              child: Text(
+                controller.displayValue.value,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 64,
+                  fontWeight: FontWeight.w300,
+                  letterSpacing: -2,
+                ),
+                textAlign: TextAlign.right,
+                maxLines: 1,
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+        ],
+      ),
+    );
+  }
+}
+
+
+// keypad.dart
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'calculator_controller.dart';
+
+enum ButtonType { number, operator, action, equals }
+
+class CalculatorKeypad extends StatelessWidget {
+  const CalculatorKeypad({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final CalculatorController controller = Get.find<CalculatorController>();
+
+    // Button layout: [label, type]
+    final List<List<dynamic>> buttons = [
+      ['AC', ButtonType.action],
+      ['+/-', ButtonType.action],
+      ['%', ButtonType.action],
+      ['÷', ButtonType.operator],
+      ['7', ButtonType.number],
+      ['8', ButtonType.number],
+      ['9', ButtonType.number],
+      ['×', ButtonType.operator],
+      ['4', ButtonType.number],
+      ['5', ButtonType.number],
+      ['6', ButtonType.number],
+      ['-', ButtonType.operator],
+      ['1', ButtonType.number],
+      ['2', ButtonType.number],
+      ['3', ButtonType.number],
+      ['+', ButtonType.operator],
+      ['⌫', ButtonType.action],
+      ['0', ButtonType.number],
+      ['.', ButtonType.number],
+      ['=', ButtonType.equals],
+    ];
+
+    return Container(
+      color: const Color(0xFF1C1C1E),
+      padding: const EdgeInsets.fromLTRB(12, 8, 12, 16),
+      child: GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 4,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          childAspectRatio: 1.1,
+        ),
+        itemCount: buttons.length,
+        itemBuilder: (context, index) {
+          final String label = buttons[index][0];
+          final ButtonType type = buttons[index][1];
+          return _CalcButton(
+            label: label,
+            type: type,
+            onPressed: () => _handlePress(controller, label),
+          );
+        },
+      ),
+    );
+  }
+
+  void _handlePress(CalculatorController controller, String label) {
+    switch (label) {
+      case 'AC':
+        controller.onClear();
+        break;
+      case '+/-':
+        controller.onToggleSign();
+        break;
+      case '%':
+        controller.onPercentPressed();
+        break;
+      case '÷':
+      case '×':
+      case '-':
+      case '+':
+        controller.onOperatorPressed(label);
+        break;
+      case '=':
+        controller.onEqualsPressed();
+        break;
+      case '.':
+        controller.onDecimalPressed();
+        break;
+      case '⌫':
+        controller.onDelete();
+        break;
+      default:
+        controller.onNumberPressed(label);
+    }
+  }
+}
+
+class _CalcButton extends StatelessWidget {
+  final String label;
+  final ButtonType type;
+  final VoidCallback onPressed;
+
+  const _CalcButton({
+    required this.label,
+    required this.type,
+    required this.onPressed,
+  });
+
+  Color get _backgroundColor {
+    switch (type) {
+      case ButtonType.action:
+        return const Color(0xFF636366);
+      case ButtonType.operator:
+        return const Color(0xFFFF9500);
+      case ButtonType.equals:
+        return const Color(0xFFFF9500);
+      case ButtonType.number:
+        return const Color(0xFF2C2C2E);
+    }
+  }
+
+  Color get _foregroundColor {
+    switch (type) {
+      case ButtonType.action:
+        return Colors.black;
+      default:
+        return Colors.white;
+    }
+  }
+
+  double get _fontSize {
+    return label.length > 1 ? 18 : 24;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onPressed,
+        borderRadius: BorderRadius.circular(50),
+        splashColor: Colors.white24,
+        child: Ink(
+          decoration: BoxDecoration(
+            color: _backgroundColor,
+            borderRadius: BorderRadius.circular(50),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.3),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Center(
+            child: Text(
+              label,
+              style: TextStyle(
+                color: _foregroundColor,
+                fontSize: _fontSize,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// puspec
+name: calculator_app
+description: A calculator app using GetX state management.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  get: ^4.6.6
+
+flutter:
+  uses-material-design: true

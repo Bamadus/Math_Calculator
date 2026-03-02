@@ -18,7 +18,7 @@ class Number_pad extends StatelessWidget{
       margin: EdgeInsets.all( 10),
       // padding: EdgeInsets.all(35.0),
       decoration: ShapeDecoration(
-        color: const Color(0xffdee2e6),
+        color: Theme.of(context).brightness == Brightness.dark ? const Color(0xff393d3f) : const Color(0xffdee2e6),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(100.0),
         ),

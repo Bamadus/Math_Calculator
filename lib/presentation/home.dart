@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'abstract/number_pad.dart';
 
 class CalcScreen extends StatefulWidget {
-  const CalcScreen(Function? flipTheme ,{super.key});
+  const CalcScreen(this.flipTheme, {super.key,});
+
+  final VoidCallback? flipTheme;
 
   @override
   State<CalcScreen> createState() => _CalcScreenState();
@@ -10,7 +12,6 @@ class CalcScreen extends StatefulWidget {
 
 class _CalcScreenState extends State<CalcScreen> {
 
-  dynamic get flipTheme => flipTheme;
   
   double screenHeight(BuildContext context) => MediaQuery.of(context).size.height;
 
@@ -19,9 +20,10 @@ class _CalcScreenState extends State<CalcScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 150, 197, 220),
-        title: const Text('BAMADUS'),
-        leading: IconButton(onPressed:flipTheme, 
+        title: const Text('BAMADUS',),
+        leading: IconButton(onPressed: widget.flipTheme, 
         color: Colors.black54,
+        // selectedIcon: Image.asset("assets/white_brush.png",),
         icon: Image.asset("assets/black_brush.png",)
         ),
         actions: [
@@ -55,17 +57,17 @@ class _CalcScreenState extends State<CalcScreen> {
               Number_pad(number: '( )', color: const Color(0xff006400)),
               Number_pad(number: '%', color: const Color(0xff006400)),
               Number_pad(number: '÷', color: const Color(0xff006400)),
-              Number_pad(number: '7', color: const Color(0xff212529)),
-              Number_pad(number: '8', color: const Color(0xff212529),),
-              Number_pad(number: '9', color: const Color(0xff212529)),
+              Number_pad(number: '7', color: Theme.of(context).brightness == Brightness.dark ? const Color(0xfff8f9fa) : const Color(0xff212529)),
+              Number_pad(number: '8', color: Theme.of(context).brightness == Brightness.dark ? const Color(0xfff8f9fa) : const Color(0xff212529),),
+              Number_pad(number: '9', color: Theme.of(context).brightness == Brightness.dark ? const Color(0xfff8f9fa) : const Color(0xff212529)),
               Number_pad(number: 'x', color: const Color(0xff006400)),
-              Number_pad(number: '4', color: const Color(0xff212529),),
-              Number_pad(number: '5', color: const Color(0xff212529),),
-              Number_pad(number: '6', color: const Color(0xff212529),),
+              Number_pad(number: '4', color: Theme.of(context).brightness == Brightness.dark ? const Color(0xfff8f9fa) : const Color(0xff212529),),
+              Number_pad(number: '5', color: Theme.of(context).brightness == Brightness.dark ? const Color(0xfff8f9fa) : const Color(0xff212529),),
+              Number_pad(number: '6', color: Theme.of(context).brightness == Brightness.dark ? const Color(0xfff8f9fa) : const Color(0xff212529),),
               Number_pad(number: '-', size: 30, color: const Color(0xff006400)),
-              Number_pad(number: '1', color: const Color(0xff212529),),
-              Number_pad(number: '2', color: const Color(0xff212529),),
-              Number_pad(number: '3', color: const Color(0xff212529),),
+              Number_pad(number: '1', color: Theme.of(context).brightness == Brightness.dark ? const Color(0xfff8f9fa) : const Color(0xff212529),),
+              Number_pad(number: '2', color: Theme.of(context).brightness == Brightness.dark ? const Color(0xfff8f9fa) : const Color(0xff212529),),
+              Number_pad(number: '3', color: Theme.of(context).brightness == Brightness.dark ? const Color(0xfff8f9fa) : const Color(0xff212529),),
               Number_pad(number: '+', color: const Color(0xff006400)),
 
               // Container(
@@ -78,7 +80,7 @@ class _CalcScreenState extends State<CalcScreen> {
 
               Number_pad(number: '0', color: const Color(0xff212529),),
               Number_pad(number: '.', color: const Color(0xff212529),),
-              Number_pad(number: '=', color: const Color(0xff006400),),
+              Number_pad(number: '=', color: Theme.of (context).brightness == Brightness.dark ? Color(0xff343a40) : const Color(0xfff8f9fa),),
             ],
           );
             }

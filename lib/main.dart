@@ -14,10 +14,10 @@ class CalcApp extends StatefulWidget {
 
 class _CalcAppState extends State<CalcApp> {
 
-  bool isDark= true;
+  bool isDark = false;
   void flipTheme(){
     setState(() {
-      !isDark;
+      isDark = !isDark;
     });
   }
   @override
@@ -26,9 +26,27 @@ class _CalcAppState extends State<CalcApp> {
       debugShowCheckedModeBanner: false,
       // title: 'Flutter Calculator',
       theme: ThemeData(
-        
-        brightness: isDark ? Brightness.light : Brightness.dark
+        brightness: isDark ? Brightness.dark : Brightness.light,
+        colorScheme: ColorScheme?.fromSeed(seedColor: Color(0xff212529)),
+        textTheme: const TextTheme(
+          displayLarge: TextStyle(fontSize: 25,
+              fontWeight: FontWeight.w400,
+              color: Color(0xff000000)
+          ),
+        )
       ),
+      darkTheme: ThemeData(
+        brightness: isDark ? Brightness.dark : Brightness.light,
+        // colorScheme: ColorScheme?.fromSeed(seedColor: Color(0xff343a40)),
+        textTheme: const TextTheme(
+          displayLarge: TextStyle(fontSize: 25,
+            fontWeight: FontWeight.w400,
+            color: Color(0xffFFFFFF)
+          ),
+        )
+      ),
+
+      themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
       home: CalcScreen(flipTheme),
     );
   }
