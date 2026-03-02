@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:calc/presentation/home.dart';
 
-void main() {
+void main(){
   runApp(CalcApp());
 }
 
@@ -18,6 +18,11 @@ class _CalcAppState extends State<CalcApp> {
   void flipTheme(){
     setState(() {
       isDark = !isDark;
+      // if(isDark == true){
+      //   print("Dark!!!");
+      // }else{
+      //   print("Light");
+      // }
     });
   }
   @override
@@ -25,9 +30,14 @@ class _CalcAppState extends State<CalcApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // title: 'Flutter Calculator',
+      themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
       theme: ThemeData(
+        useMaterial3: true,
         brightness: isDark ? Brightness.dark : Brightness.light,
-        colorScheme: ColorScheme?.fromSeed(seedColor: Color(0xff212529)),
+        colorScheme: ColorScheme?.fromSeed(
+          seedColor: Color(0xff212529),
+          brightness: isDark ? Brightness.dark : Brightness.light,
+          ),
         textTheme: const TextTheme(
           displayLarge: TextStyle(fontSize: 25,
               fontWeight: FontWeight.w400,
@@ -37,7 +47,10 @@ class _CalcAppState extends State<CalcApp> {
       ),
       darkTheme: ThemeData(
         brightness: isDark ? Brightness.dark : Brightness.light,
-        // colorScheme: ColorScheme?.fromSeed(seedColor: Color(0xff343a40)),
+        colorScheme: ColorScheme?.fromSeed(
+          seedColor: Color(0xff343a40),
+          brightness: isDark ? Brightness.dark : Brightness.light,
+          ),
         textTheme: const TextTheme(
           displayLarge: TextStyle(fontSize: 25,
             fontWeight: FontWeight.w400,
@@ -46,7 +59,6 @@ class _CalcAppState extends State<CalcApp> {
         )
       ),
 
-      themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
       home: CalcScreen(flipTheme),
     );
   }

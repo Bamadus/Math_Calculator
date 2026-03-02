@@ -3,13 +3,17 @@ import 'package:flutter/material.dart';
 class Number_pad extends StatelessWidget{
   final String? number;
   final Color? color;
+  final Color? back_color;
   final double? size;
+  final FontWeight? fontweight;
 
   Number_pad({
     super.key, 
     this.number,
     this.color,
     this.size,
+    this.fontweight,
+    this.back_color,
     });
 
   @override
@@ -18,7 +22,7 @@ class Number_pad extends StatelessWidget{
       margin: EdgeInsets.all( 10),
       // padding: EdgeInsets.all(35.0),
       decoration: ShapeDecoration(
-        color: Theme.of(context).brightness == Brightness.dark ? const Color(0xff393d3f) : const Color(0xffdee2e6),
+        color: back_color ?? (Theme.of(context).brightness == Brightness.dark ? const Color(0xff393d3f) : const Color(0xffdee2e6)),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(100.0),
         ),
@@ -29,7 +33,7 @@ class Number_pad extends StatelessWidget{
         style: TextStyle(
           fontSize: size ?? 25,
           fontFamily: 'Roboto',
-          fontWeight: FontWeight.w400,
+          fontWeight: fontweight ?? FontWeight.w400,
           color: color ?? Colors.white,
         ),
             ),
