@@ -7,7 +7,7 @@ class Number_pad extends StatelessWidget{
   final double? size;
   final FontWeight? fontweight;
 
-  Number_pad({
+  const Number_pad({
     super.key, 
     this.number,
     this.color,

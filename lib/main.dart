@@ -1,8 +1,15 @@
+import 'package:calc/logic/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:calc/presentation/home.dart';
+import 'package:provider/provider.dart';
+
 
 void main(){
-  runApp(CalcApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_)=> Calc_provider(),
+      child: const CalcApp(),
+    ));
 }
 
 class CalcApp extends StatefulWidget {
