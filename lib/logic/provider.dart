@@ -11,6 +11,7 @@ class Calc_provider extends ChangeNotifier{
   void appendVal(String value){
     _input += value;
     notifyListeners();
+    return print("Fine!!!!");
   }
 
   void clear(){
