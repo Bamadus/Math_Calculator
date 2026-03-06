@@ -42,7 +42,7 @@ class _CalcScreenState extends State<CalcScreen> {
       body: Column(
         children:[
           SizedBox(
-            height: screenHeight(context)*0.25,
+            height: screenHeight(context)*0.17,
             child: Container(
               // color: Colors.amber,
               margin: EdgeInsets.all(10),
@@ -50,6 +50,7 @@ class _CalcScreenState extends State<CalcScreen> {
               alignment: Alignment.centerRight,
               child: Column(
                 children: [
+                  SizedBox(height: 10,),
                   Text(
                     calculator.input,
                     style: const TextStyle(
@@ -59,13 +60,48 @@ class _CalcScreenState extends State<CalcScreen> {
                   const SizedBox(height: 10,),
                   Text(
                     calculator.result,
-                    style: const TextStyle(fontSize: 30),
+                    style: const TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w500
+                      ),
                   )
                 ],
               ),
             ),
           ),
+          Container(
+            // color: Colors.deepOrange,
+            padding: EdgeInsets.only(left: 15, right: 15),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  height: 60,
+                  width: 45,
+                  child: IconButton(
+                    iconSize: 35,
+                    onPressed: (){},
+                    icon: Theme.of(context).brightness == Brightness.dark ? Image.asset(color: Color(0xffeff1ed),"assets/history_2.png"):Image.asset(color: Color(0xff8aa2a9),"assets/history_2.png")
+                    ),
+                    ),
+                    SizedBox(
+                  height: 60,
+                  width: 45,
+                  child: IconButton(
+                    iconSize: 35,
+                    onPressed: (){
+                      provider.onDelete();
+                    },
+                    icon: Icon(Icons.cancel_presentation_outlined)
+                    ),
+                    ),
+              ],
+            ),
+          ),
           Divider(
+            indent: 10,
+            endIndent: 10,
             thickness: 2,
           ),
           SizedBox(),
@@ -79,12 +115,9 @@ class _CalcScreenState extends State<CalcScreen> {
                   orientation == Orientation.portrait ? 4 : 5,
                   mainAxisSpacing: orientation == Orientation.landscape ? 5 : 4,
             children: [
-
               InkWell(
                 onTap: (){
-                  if(value == 'C'){
-                    provider.clear();
-                  } 
+                  provider.clear();
                 },
                 child: Number_pad(
                   number: 'C', 
@@ -102,94 +135,67 @@ class _CalcScreenState extends State<CalcScreen> {
               
               InkWell(
                 onTap: (){
-                  if(value == "÷"){
-                    provider.appendVal(value!);
-                  }
+                  provider.appendVal("÷");
                 },
                 child: Number_pad(number: '÷', size: 30, color: Theme.of(context).brightness == Brightness.dark ? const Color(0xff27fb6b) : const Color(0xff2e933c))),
               InkWell(
                 onTap: (){
-                  if(value == "7"){
-                    provider.appendVal(value!);
-                  }
+                  provider.appendVal('7');
                 },
                 child: Number_pad(number: '7', color: Theme.of(context).brightness == Brightness.dark ? const Color(0xfff8f9fa) : const Color(0xff212529))),
               InkWell(
                 onTap: (){
-                  if(value == "8"){
-                    provider.appendVal(value!);
-                    print("okay!!");
-                  }
+                  provider.appendVal('8');
                 },
                 child: Number_pad(number: '8', color: Theme.of(context).brightness == Brightness.dark ? const Color(0xfff8f9fa) : const Color(0xff212529),)),
               InkWell(
                 onTap: (){
-                  if(value == "9"){
-                    provider.appendVal(value!);
-                  }
+                  provider.appendVal('9');
                 },
                 child: Number_pad(number: '9', color: Theme.of(context).brightness == Brightness.dark ? const Color(0xfff8f9fa) : const Color(0xff212529))),
               InkWell(
                 onTap: (){
-                  if(value == "x"){
-                    provider.appendVal(value!);
-                  }
+                  provider.appendVal('x');
                 },
                 child: Number_pad(number: 'x', size: 30,color: Theme.of(context).brightness == Brightness.dark ? const Color(0xff27fb6b) : const Color(0xff2e933c))),
               InkWell(
                 onTap: (){
-                  if(value == "4"){
-                    provider.appendVal(value!);
-                  }
+                  provider.appendVal('4');
                 },
                 child: Number_pad(number: '4', color: Theme.of(context).brightness == Brightness.dark ? const Color(0xfff8f9fa) : const Color(0xff212529),)),
               InkWell(
                 onTap: (){
-                  if(value == "5"){
-                    provider.appendVal(value!);
-                  }
+                  provider.appendVal('5');
                 },
                 child: Number_pad(number: '5', color: Theme.of(context).brightness == Brightness.dark ? const Color(0xfff8f9fa) : const Color(0xff212529),)),
               InkWell(
                 onTap: (){
-                  if(value == "6"){
-                    provider.appendVal(value!);
-                  }
+                  provider.appendVal('6');
                 },
                 child: Number_pad(number: '6', color: Theme.of(context).brightness == Brightness.dark ? const Color(0xfff8f9fa) : const Color(0xff212529),)),
               InkWell(
                 onTap: (){
-                  if(value == "-"){
-                    provider.appendVal(value!);
-                  }
+                  provider.appendVal('-');
                 },
                 child: Number_pad(number: '-', size: 30, color: Theme.of(context).brightness == Brightness.dark ? const Color(0xff27fb6b) : const Color(0xff2e933c))),
               InkWell(
                 onTap: (){
-                  if(value == "1"){
-                    provider.appendVal(value!);
-                  }
+                  provider.appendVal('1');
                 },
                 child: Number_pad(number: '1', color: Theme.of(context).brightness == Brightness.dark ? const Color(0xfff8f9fa) : const Color(0xff212529),)),
               InkWell(
                 onTap: (){
-                  if(value == "2"){
-                    provider.appendVal(value!);
-                  }
+                  provider.appendVal('2');
                 },
                 child: Number_pad(number: '2', color: Theme.of(context).brightness == Brightness.dark ? const Color(0xfff8f9fa) : const Color(0xff212529),)),
               InkWell(
                 onTap: (){
-                  if(value == "3"){
-                    provider.appendVal(value!);
-                  }
+                  provider.appendVal('3');
                 },
                 child: Number_pad(number: '3', color: Theme.of(context).brightness == Brightness.dark ? const Color(0xfff8f9fa) : const Color(0xff212529),)),
               InkWell(
                 onTap: (){
-                  if(value == "+"){
-                    provider.appendVal(value!);
-                  }
+                  provider.appendVal('+');
                 },
                 child: Number_pad(number: '+', size: 30,color: Theme.of(context).brightness == Brightness.dark ? const Color(0xff27fb6b) : const Color(0xff2e933c))),
 
@@ -203,19 +209,13 @@ class _CalcScreenState extends State<CalcScreen> {
 
               InkWell(
                 onTap: (){
-                  if(value == "0"){
-                    provider.appendVal(value!);
-                  }
+                  provider.appendVal('0');
                 },
                 child: Number_pad(number: '0', color: Theme.of(context).brightness == Brightness.dark ? const Color (0xfff8f9fa) : const Color(0xff212529),)),
               Number_pad(number: '.', color: Theme.of(context).brightness == Brightness.dark ? const Color(0xff27fb6b) : const Color(0xff2e933c),),
               InkWell(
                 onTap: (){
-                  if(value == "="){
-                    provider.calculate();
-                  }else{
-                    provider.appendVal(value!);
-                  }
+                  provider.calculate();
                 },
                 child: Number_pad(
                   number: '=', 

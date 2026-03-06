@@ -65,7 +65,7 @@ flutter:
     - assets/black_brush.png
     - assets/white_brush.png
     - assets/history_2.png
-    - assets/history_3.png
+    - assets/history_1.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
