@@ -50,20 +50,27 @@ class _CalcScreenState extends State<CalcScreen> {
               alignment: Alignment.centerRight,
               child: Column(
                 children: [
-                  SizedBox(height: 10,),
-                  Text(
-                    calculator.input,
-                    style: const TextStyle(
-                      fontSize: 28
+                  SizedBox(height: 5,),
+                  Container(
+                    margin: EdgeInsets.all(5),
+                    child: Text(
+                      calculator.input,
+                      style: const TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w400
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10,),
-                  Text(
-                    calculator.result,
-                    style: const TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w500
-                      ),
+                  Container(
+                    margin: EdgeInsets.all(5),
+                    child: Text(
+                      calculator.result,
+                      style: const TextStyle(
+                        fontSize: 35,
+                        fontWeight: FontWeight.w500
+                        ),
+                    ),
                   )
                 ],
               ),
@@ -89,9 +96,10 @@ class _CalcScreenState extends State<CalcScreen> {
                   height: 60,
                   width: 45,
                   child: IconButton(
-                    iconSize: 35,
+                    iconSize: 25,
                     onPressed: (){
                       provider.onDelete();
+                      provider.onDeleteClear();
                     },
                     icon: Icon(Icons.cancel_presentation_outlined)
                     ),
@@ -108,6 +116,7 @@ class _CalcScreenState extends State<CalcScreen> {
           OrientationBuilder(
             builder: (context, orientation) {
               return GridView.count(
+                physics: NeverScrollableScrollPhysics(),
             crossAxisSpacing: 10,
             // crossAxisCount: 4,
             shrinkWrap: true,

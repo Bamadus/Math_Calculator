@@ -16,38 +16,119 @@ class Calc_provider extends ChangeNotifier{
     // }
     notifyListeners();
   }
+  void appendopt(String opt){
+
+  }
 
   void clear(){
     _input = " ";
     _result = "";
     notifyListeners();
   }
-
-  void calculate(){
+  Function? calculate(){
     try{
-      if(_input.contains("+")){
-        var part = _input.split("+");
-        _result = (double.parse(part[0]) + double.parse(part[1])).toInt().toString();
-      }else if(_input.contains("-")){
-        var part = _input.split("-");
-        _result = (double.parse(part[0]) - double.parse(part[1])).toInt().toString();
-      }else if (_input.contains("x")){
-        var part = _input.split("x");
-        _result = (double.parse(part[0]) * double.parse(part[1])).toInt().toString();
-      }else if (_input.contains("÷")){
-        var part = _input.split("÷");
-        _result = (double.parse(part[0]) / double.parse(part[1])).toInt().toString();
+
+      String _solve(String equ){
+
+        List<String> token = [];
+        String number = "";
+
+        for (int i = 0; i < equ.length; i++) {
+          if ("0123456789".contains(equ[i])) {
+            number += equ[i];
+          } else {
+            token.add(number);
+            token.add(equ[i]);
+            number = "";
+          }
+        }
+        token.add(number);
+
+        for (int i = 0; i < token.length; i++) {
+          if (token[i] == "*" || token[i] == "/") {
+            double left = double.parse(token[i - 1]);
+            double right = double.parse(token[i + 1]);
+
+            String result =
+            (token[i] == "*" ? left * right : left / right).toString();
+
+           token.replaceRange(i - 1, i + 2, [result.toString()]);
+           i--;
+          }
+        }
+
+        double result = double.parse(token[0]);
+
+        for (int i = 1; i < token.length; i += 2) {
+          double num = double.parse(token[i + 1]);
+
+          if (token[i] == "+") {
+            result += num;
+          } else if (token[i] == "-") {
+            result -= num;
+          }
+        }
+
+        _result = result.toString();
+        
+        return _result;
+      
       }
-    } catch (e){
-      _result = "Error";
+  
+      String braces(){
+        String input = _input;
+        input = _input.replaceAll(" ", "");
+
+        while (input.contains("(")) {
+          int start = input.lastIndexOf("(");
+          int end = input.indexOf(")", start);
+
+          String innerExp = input.substring(start + 1, end);
+          String innerResult = _solve(innerExp);
+
+          input = input.replaceRange(start, end + 1, innerResult.toString());
+        }  
+        return _solve(input);
+      }
+  
+    }catch(e){
+      _result = "Error, still working on it...";
+    }
+    notifyListeners();
+    return null;
+  }
+
+
+    // try{
+    //   if(_input.contains("+")){
+    //     var part = _input.split("+");
+    //     _result = (double.parse(part[0]) + double.parse(part[1])).toInt().toString();
+    //   }else if(_input.contains("-")){
+    //     var part = _input.split("-");
+    //     _result = (double.parse(part[0]) - double.parse(part[1])).toInt().toString();
+    //   }else if (_input.contains("x")){
+    //     var part = _input.split("x");
+    //     _result = (double.parse(part[0]) * double.parse(part[1])).toInt().toString();
+    //   }else if (_input.contains("÷")){
+    //     var part = _input.split("÷");
+    //     _result = (double.parse(part[0]) / double.parse(part[1])).toInt().toString();
+    //   }else if(_input.contains("-") && _input.contains("+")){
+
+    //   }
+    // } catch (e){
+    //   _result = "Error";
+    // }
+    // notifyListeners();
+
+  void onDelete(){
+    if(_input.isNotEmpty){
+      _input = _input.substring(0, _input.length - 1);
     }
     notifyListeners();
   }
 
-  void onDelete(){
-    if(_input.length > 1){
-      _input = _input.substring(0, _input.length - 1);
-    }
+  void onDeleteClear(){
+    _result= "";
     notifyListeners();
   }
 }
