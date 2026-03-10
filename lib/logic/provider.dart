@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 class Calc_provider extends ChangeNotifier{
 
   String _input = "";
-  String _result = "";
+  late double _result;
 
   String get input => _input;
-  String get result => _result;
+  double get result => _result;
 
   void appendVal(String value){
     // value_color = const Color(0xff2e933c);
@@ -16,19 +16,22 @@ class Calc_provider extends ChangeNotifier{
     // }
     notifyListeners();
   }
-  void appendopt(String opt){
-
-  }
+  // void appendopt(){
+  //   if(_result.isNotEmpty){
+  //     _result = 0;
+  //   }
+  // }
 
   void clear(){
     _input = " ";
-    _result = "";
+    _result = double.parse("");
     notifyListeners();
   }
+
   Function? calculate(){
     try{
 
-      String _solve(String equ){
+      double _solve(String equ){
 
         List<String> token = [];
         String number = "";
@@ -45,7 +48,7 @@ class Calc_provider extends ChangeNotifier{
         token.add(number);
 
         for (int i = 0; i < token.length; i++) {
-          if (token[i] == "*" || token[i] == "/") {
+          if (token[i] == "*" || token[i] == "÷") {
             double left = double.parse(token[i - 1]);
             double right = double.parse(token[i + 1]);
 
@@ -69,13 +72,15 @@ class Calc_provider extends ChangeNotifier{
           }
         }
 
-        _result = result.toString();
+        _result = result;
         
+        notifyListeners();
+
         return _result;
-      
+        
       }
   
-      String braces(){
+      double braces(){
         String input = _input;
         input = _input.replaceAll(" ", "");
 
@@ -84,7 +89,7 @@ class Calc_provider extends ChangeNotifier{
           int end = input.indexOf(")", start);
 
           String innerExp = input.substring(start + 1, end);
-          String innerResult = _solve(innerExp);
+          double innerResult = _solve(innerExp);
 
           input = input.replaceRange(start, end + 1, innerResult.toString());
         }  
@@ -92,7 +97,7 @@ class Calc_provider extends ChangeNotifier{
       }
   
     }catch(e){
-      _result = "Error, still working on it...";
+      _result = (double.parse("Error, still working on it...")).toString() as double;
     }
     notifyListeners();
     return null;
@@ -127,8 +132,8 @@ class Calc_provider extends ChangeNotifier{
     notifyListeners();
   }
 
-  void onDeleteClear(){
-    _result= "";
+  void onDeleteResultClear(){
+    _result= double.parse("");
     notifyListeners();
   }
 }
