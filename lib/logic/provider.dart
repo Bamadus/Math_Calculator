@@ -54,9 +54,9 @@ double evaluate(String expression) {
   _expr = expression.replaceAll(' ', '');
   _pos = 0;
   final result = _parseAddSubtract();
-  if (_pos < _expr.length) {
-    throw FormatException('Unexpected character: ${_expr[_pos]}');
-  }
+  // if (_pos < _expr.length) {
+  //   throw FormatException('Unexpected character: ${_expr[_pos]}');
+  // }
   return result;
 }
 
@@ -84,7 +84,8 @@ double _parseMultiplyDivide() {
     if (op == '*') {
       left *= right;
     } else if (op == '/') {
-      if (right == 0) throw ArgumentError('Division by zero');
+      if (right == 0) return double.parse("Error");
+      // throw ArgumentError('Division by zero');
       left /= right;
     } else {
       left %= right;
@@ -123,7 +124,7 @@ double _parsePrimary() {
     _pos++;
     final result = _parseAddSubtract();
     if (_pos >= _expr.length || _expr[_pos] != ')') {
-      throw FormatException('Missing closing bracket');
+      return double.parse("Missing Braces");
     }
     _pos++;
     return result;
@@ -137,7 +138,7 @@ double _parseNumber() {
     _pos++;
   }
   if (_pos == start) {
-    throw FormatException(
+    return double.parse(
       'Expected number at position $_pos, got: '
       '${_pos < _expr.length ? _expr[_pos] : "end of input"}',
     );
