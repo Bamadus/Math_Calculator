@@ -25,11 +25,6 @@ class _CalcAppState extends State<CalcApp> {
   void flipTheme(){
     setState(() {
       isDark = !isDark;
-      // if(isDark == true){
-      //   print("Dark!!!");
-      // }else{
-      //   print("Light");
-      // }
     });
   }
   @override

@@ -65,7 +65,7 @@ class _CalcScreenState extends State<CalcScreen> {
                   Container(
                     margin: EdgeInsets.all(5),
                     child: Text(
-                      (calculator.result).toString(),
+                      calculator.result,
                       style: const TextStyle(
                         fontSize: 35,
                         fontWeight: FontWeight.w500
@@ -99,7 +99,6 @@ class _CalcScreenState extends State<CalcScreen> {
                     iconSize: 25,
                     onPressed: (){
                       provider.onDelete();
-                      provider.onDeleteResultClear();
                     },
                     icon: Icon(Icons.cancel_presentation_outlined)
                     ),

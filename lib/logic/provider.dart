@@ -1,139 +1,146 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
-class Calc_provider extends ChangeNotifier{
-
+class Calc_provider extends ChangeNotifier {
   String _input = "";
-  late double _result;
+  String _result = "";
 
   String get input => _input;
-  double get result => _result;
+  String get result => _result;
 
-  void appendVal(String value){
-    // value_color = const Color(0xff2e933c);
+  void appendVal(String value) {
     _input += value;
-    // if(_input.contains("+")){
-    //   _input = value_color as String;
-    // }
-    notifyListeners();
-  }
-  // void appendopt(){
-  //   if(_result.isNotEmpty){
-  //     _result = 0;
-  //   }
-  // }
-
-  void clear(){
-    _input = " ";
-    _result = double.parse("");
     notifyListeners();
   }
 
-  Function? calculate(){
-    try{
-
-      double _solve(String equ){
-
-        List<String> token = [];
-        String number = "";
-
-        for (int i = 0; i < equ.length; i++) {
-          if ("0123456789".contains(equ[i])) {
-            number += equ[i];
-          } else {
-            token.add(number);
-            token.add(equ[i]);
-            number = "";
-          }
-        }
-        token.add(number);
-
-        for (int i = 0; i < token.length; i++) {
-          if (token[i] == "*" || token[i] == "÷") {
-            double left = double.parse(token[i - 1]);
-            double right = double.parse(token[i + 1]);
-
-            String result =
-            (token[i] == "*" ? left * right : left / right).toString();
-
-           token.replaceRange(i - 1, i + 2, [result.toString()]);
-           i--;
-          }
-        }
-
-        double result = double.parse(token[0]);
-
-        for (int i = 1; i < token.length; i += 2) {
-          double num = double.parse(token[i + 1]);
-
-          if (token[i] == "+") {
-            result += num;
-          } else if (token[i] == "-") {
-            result -= num;
-          }
-        }
-
-        _result = result;
-        
-        notifyListeners();
-
-        return _result;
-        
-      }
-  
-      double braces(){
-        String input = _input;
-        input = _input.replaceAll(" ", "");
-
-        while (input.contains("(")) {
-          int start = input.lastIndexOf("(");
-          int end = input.indexOf(")", start);
-
-          String innerExp = input.substring(start + 1, end);
-          double innerResult = _solve(innerExp);
-
-          input = input.replaceRange(start, end + 1, innerResult.toString());
-        }  
-        return _solve(input);
-      }
-  
-    }catch(e){
-      _result = (double.parse("Error, still working on it...")).toString() as double;
-    }
+  void clear() {
+    _input = "";
+    _result = "";
     notifyListeners();
-    return null;
   }
 
-
-    // try{
-    //   if(_input.contains("+")){
-    //     var part = _input.split("+");
-    //     _result = (double.parse(part[0]) + double.parse(part[1])).toInt().toString();
-    //   }else if(_input.contains("-")){
-    //     var part = _input.split("-");
-    //     _result = (double.parse(part[0]) - double.parse(part[1])).toInt().toString();
-    //   }else if (_input.contains("x")){
-    //     var part = _input.split("x");
-    //     _result = (double.parse(part[0]) * double.parse(part[1])).toInt().toString();
-    //   }else if (_input.contains("÷")){
-    //     var part = _input.split("÷");
-    //     _result = (double.parse(part[0]) / double.parse(part[1])).toInt().toString();
-    //   }else if(_input.contains("-") && _input.contains("+")){
-
-    //   }
-    // } catch (e){
-    //   _result = "Error";
-    // }
-    // notifyListeners();
-
-  void onDelete(){
-    if(_input.isNotEmpty){
+  void onDelete() {
+    if (_input.isNotEmpty) {
       _input = _input.substring(0, _input.length - 1);
     }
+    _result = "";
     notifyListeners();
   }
 
-  void onDeleteResultClear(){
-    _result= double.parse("");
+  void calculate() {
+    try {
+      
+      final expression = _input
+          .replaceAll('x', '*')
+          .replaceAll('÷', '/');
+
+      final answer = evaluate(expression);
+
+      _result = answer == answer.truncateToDouble()
+          ? answer.toInt().toString()
+          : answer.toString();
+    } catch (e) {
+      _result = "Error";
+    }
     notifyListeners();
   }
+}
+
+
+int _pos = 0;
+String _expr = '';
+
+double evaluate(String expression) {
+  _expr = expression.replaceAll(' ', '');
+  _pos = 0;
+  final result = _parseAddSubtract();
+  if (_pos < _expr.length) {
+    throw FormatException('Unexpected character: ${_expr[_pos]}');
+  }
+  return result;
+}
+
+// Addition & Subtraction
+double _parseAddSubtract() {
+  double left = _parseMultiplyDivide();
+  while (_pos < _expr.length) {
+    final op = _expr[_pos];
+    if (op != '+' && op != '-') break;
+    _pos++;
+    final right = _parseMultiplyDivide();
+    left = op == '+' ? left + right : left - right;
+  }
+  return left;
+}
+
+// Division & Multiplication
+double _parseMultiplyDivide() {
+  double left = _parseOrders();
+  while (_pos < _expr.length) {
+    final op = _expr[_pos];
+    if (op != '*' && op != '/' && op != '%') break;
+    _pos++;
+    final right = _parseOrders();
+    if (op == '*') {
+      left *= right;
+    } else if (op == '/') {
+      if (right == 0) throw ArgumentError('Division by zero');
+      left /= right;
+    } else {
+      left %= right;
+    }
+  }
+  return left;
+}
+
+// O — right-associative exponents
+double _parseOrders() {
+  double base = _parseUnary();
+  if (_pos < _expr.length && _expr[_pos] == '^') {
+    _pos++;
+    final exponent = _parseOrders();
+    base = pow(base, exponent).toDouble();
+  }
+  return base;
+}
+
+// Unary minus / plus
+double _parseUnary() {
+  if (_pos < _expr.length && _expr[_pos] == '-') {
+    _pos++;
+    return -_parseUnary();
+  }
+  if (_pos < _expr.length && _expr[_pos] == '+') {
+    _pos++;
+    return _parseUnary();
+  }
+  return _parsePrimary();
+}
+
+// B — brackets and numbers
+double _parsePrimary() {
+  if (_pos < _expr.length && _expr[_pos] == '(') {
+    _pos++;
+    final result = _parseAddSubtract();
+    if (_pos >= _expr.length || _expr[_pos] != ')') {
+      throw FormatException('Missing closing bracket');
+    }
+    _pos++;
+    return result;
+  }
+  return _parseNumber();
+}
+
+double _parseNumber() {
+  final start = _pos;
+  while (_pos < _expr.length && RegExp(r'[0-9.]').hasMatch(_expr[_pos])) {
+    _pos++;
+  }
+  if (_pos == start) {
+    throw FormatException(
+      'Expected number at position $_pos, got: '
+      '${_pos < _expr.length ? _expr[_pos] : "end of input"}',
+    );
+  }
+  return double.parse(_expr.substring(start, _pos));
 }
