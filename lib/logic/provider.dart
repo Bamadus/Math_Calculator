@@ -27,25 +27,81 @@ class Calc_provider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void applyPercent() {
+    if (_input.isEmpty) return;
+
+    try {
+      final expr = _input.replaceAll(' ', '');
+
+      // Find the last +/- that is a binary operator (not a unary sign at pos 0)
+      int opIndex = -1;
+      for (int i = expr.length - 1; i > 0; i--) {
+        if (expr[i] == '+' || expr[i] == '-') {
+          opIndex = i;
+          break;
+        }
+      }
+
+      if (opIndex != -1) {
+        // e.g. "200+10"  →  base=200, op="+", percentNum=10
+        final base = double.parse(expr.substring(0, opIndex));
+        final op = expr[opIndex];
+        final percentNum = double.parse(expr.substring(opIndex + 1));
+
+        // percentNum% of base
+        final percentValue = base * percentNum / 100;
+
+        // Rebuild expression with the resolved percent value
+        final formatted = _formatAnswer(percentValue);
+        _input = '${_formatAnswer(base)}$op$formatted';
+      } else {
+        // No preceding operator — just divide by 100
+        final num = double.parse(expr);
+        _input = _formatAnswer(num / 100);
+      }
+    } catch (_) {
+      _result = "Error";
+    }
+
+    notifyListeners();
+  }
+
+
   void calculate() {
     try {
       
       final expression = _input
           .replaceAll('x', '*')
           .replaceAll('÷', '/');
-
+      
       final answer = evaluate(expression);
+      _result = _formatAnswer(answer);
+      
+      // if(expression.contains(".")){
+      //   final answer = evaluate(expression);
 
-      _result = answer == answer.truncateToDouble()
-          ? answer.toInt().toString()
-          : answer.toString();
+      // _result = answer == answer.truncateToDouble()
+      //     ? answer.toInt().toStringAsFixed(2)
+      //     : answer.toStringAsFixed(2);
+      // }else{
+      //   final answer = evaluate(expression);
+
+      // _result = answer == answer.truncateToDouble()
+      //     ? answer.toInt().toString()
+      //     : answer.toString();
+      // }
     } catch (e) {
       _result = "Error";
     }
     notifyListeners();
   }
-}
 
+  String _formatAnswer(double value) {
+    return value == value.truncateToDouble()
+        ? value.toInt().toString()
+        : value.toString();
+  }  
+}
 
 int _pos = 0;
 String _expr = '';

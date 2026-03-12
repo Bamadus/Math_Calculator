@@ -139,7 +139,11 @@ class _CalcScreenState extends State<CalcScreen> {
                 number: '( )', 
                 size: 30, 
                 color: Theme.of(context).brightness == Brightness.dark ? const Color(0xff27fb6b) : const Color(0xff2e933c)),
-              Number_pad(number: '%', size: 30, color: Theme.of(context).brightness == Brightness.dark ? const Color(0xff27fb6b) : const Color(0xff2e933c)),
+              InkWell(
+                onTap: (){
+                  provider.appendVal('%');
+                },
+                child: Number_pad(number: '%', size: 30, color: Theme.of(context).brightness == Brightness.dark ? const Color(0xff27fb6b) : const Color(0xff2e933c))),
               
               InkWell(
                 onTap: (){
@@ -220,7 +224,11 @@ class _CalcScreenState extends State<CalcScreen> {
                   provider.appendVal('0');
                 },
                 child: Number_pad(number: '0', color: Theme.of(context).brightness == Brightness.dark ? const Color (0xfff8f9fa) : const Color(0xff212529),)),
-              Number_pad(number: '.', color: Theme.of(context).brightness == Brightness.dark ? const Color(0xff27fb6b) : const Color(0xff2e933c),),
+              InkWell(
+                onTap: (){
+                  provider.appendVal('.');
+                },
+                child: Number_pad(number: '.', color: Theme.of(context).brightness == Brightness.dark ? const Color(0xff27fb6b) : const Color(0xff2e933c),)),
               InkWell(
                 onTap: (){
                   provider.calculate();
