@@ -1,6 +1,8 @@
 import 'package:calc/logic/provider.dart';
+import 'package:calc/presentation/abstract/theme_key.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'abstract/number_pad.dart';
 
 class CalcScreen extends StatefulWidget {
@@ -27,7 +29,12 @@ class _CalcScreenState extends State<CalcScreen> {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 150, 197, 220),
         title: const Text('BAMADUS',),
-        leading: IconButton(onPressed: widget.flipTheme, 
+        leading: IconButton(onPressed: ()async{
+          widget.flipTheme;
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setBool(Theme_key.themekey, widget.flipTheme != null);
+        
+        }, 
         color: Colors.black54,
         // selectedIcon: Image.asset("assets/white_brush.png",),
         icon: Theme.of(context).brightness == Brightness.dark ? Image.asset("assets/black_brush.png",) : Image.asset("assets/white_brush.png",)

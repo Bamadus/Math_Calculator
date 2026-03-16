@@ -1,7 +1,9 @@
 import 'package:calc/logic/provider.dart';
+import 'package:calc/presentation/abstract/theme_key.dart';
 import 'package:flutter/material.dart';
 import 'package:calc/presentation/home.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 void main(){
@@ -27,6 +29,23 @@ class _CalcAppState extends State<CalcApp> {
       isDark = !isDark;
     });
   }
+
+  @override
+  void initState() {
+    initTheme();
+    super.initState();
+  }
+
+  void initTheme()async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final bool? repeat = prefs.getBool(Theme_key.themekey);
+    if(repeat != null){
+      setState(() {
+        isDark = repeat;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
