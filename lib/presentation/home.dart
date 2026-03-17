@@ -6,9 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'abstract/number_pad.dart';
 
 class CalcScreen extends StatefulWidget {
-  const CalcScreen(this.flipTheme, {super.key,});
+  const CalcScreen({super.key});
 
-  final VoidCallback? flipTheme;
 
   @override
   State<CalcScreen> createState() => _CalcScreenState();
@@ -29,15 +28,12 @@ class _CalcScreenState extends State<CalcScreen> {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 150, 197, 220),
         title: const Text('BAMADUS',),
-        leading: IconButton(onPressed: ()async{
-          widget.flipTheme;
-          final SharedPreferences prefs = await SharedPreferences.getInstance();
-          await prefs.setBool(Theme_key.themekey, widget.flipTheme != null);
-        
+        leading: IconButton(onPressed: (){
+          context.read<Calc_provider>().flipTheme();
         }, 
         color: Colors.black54,
         // selectedIcon: Image.asset("assets/white_brush.png",),
-        icon: Theme.of(context).brightness == Brightness.dark ? Image.asset("assets/black_brush.png",) : Image.asset("assets/white_brush.png",)
+        icon: context.watch<Calc_provider>().isDark ? Image.asset("assets/black_brush.png",) : Image.asset("assets/white_brush.png",)
         ),
         actions: [
           IconButton(

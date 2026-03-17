@@ -23,41 +23,20 @@ class CalcApp extends StatefulWidget {
 
 class _CalcAppState extends State<CalcApp> {
 
-  bool isDark = false;
-  void flipTheme(){
-    setState(() {
-      isDark = !isDark;
-    });
-  }
-
-  @override
-  void initState() {
-    initTheme();
-    super.initState();
-  }
-
-  void initTheme()async{
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final bool? repeat = prefs.getBool(Theme_key.themekey);
-    if(repeat != null){
-      setState(() {
-        isDark = repeat;
-      });
-    }
-  }
+  Calc_provider get provider => context.watch<Calc_provider>();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // title: 'Flutter Calculator',
-      themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+      themeMode: provider.isDark ? ThemeMode.dark : ThemeMode.light,
       theme: ThemeData(
         useMaterial3: true,
-        brightness: isDark ? Brightness.dark : Brightness.light,
+        brightness: provider.isDark ? Brightness.dark : Brightness.light,
         colorScheme: ColorScheme?.fromSeed(
           seedColor: Color(0xff212529),
-          brightness: isDark ? Brightness.dark : Brightness.light,
+          brightness: provider.isDark ? Brightness.dark : Brightness.light,
           ),
         textTheme: const TextTheme(
           displayLarge: TextStyle(fontSize: 25,
@@ -67,10 +46,10 @@ class _CalcAppState extends State<CalcApp> {
         )
       ),
       darkTheme: ThemeData(
-        brightness: isDark ? Brightness.dark : Brightness.light,
+        brightness: provider.isDark ? Brightness.dark : Brightness.light,
         colorScheme: ColorScheme?.fromSeed(
           seedColor: Color(0xff343a40),
-          brightness: isDark ? Brightness.dark : Brightness.light,
+          brightness: provider.isDark ? Brightness.dark : Brightness.light,
           ),
         textTheme: const TextTheme(
           displayLarge: TextStyle(fontSize: 25,
@@ -80,7 +59,7 @@ class _CalcAppState extends State<CalcApp> {
         )
       ),
 
-      home: CalcScreen(flipTheme),
+      home: CalcScreen(),
     );
   }
 }

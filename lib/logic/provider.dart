@@ -1,9 +1,34 @@
 import 'dart:math';
+import 'package:calc/presentation/abstract/theme_key.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Calc_provider extends ChangeNotifier {
   String _input = "";
   String _result = "";
+
+  bool _isDark = false;
+  bool get isDark => _isDark;
+
+  Calc_provider() {
+    _loadTheme();
+  }
+
+  Future<void> _loadTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    _isDark = prefs.getBool(Theme_key.themekey) ?? false; // Default to light if null
+    notifyListeners();
+  }
+
+  Future<void> flipTheme() async {
+    _isDark = !_isDark;
+    notifyListeners();
+
+    // Save the new value to shared preferences
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(Theme_key.themekey, _isDark);
+  }
+  
 
   String get input => _input;
   String get result => _result;
