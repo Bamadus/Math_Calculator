@@ -1,9 +1,7 @@
 import 'package:calc/logic/provider.dart';
-import 'package:calc/presentation/abstract/theme_key.dart';
 import 'package:flutter/material.dart';
 import 'package:calc/presentation/home.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 
 void main(){
